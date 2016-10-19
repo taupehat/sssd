@@ -235,6 +235,12 @@ ad_enabled_domains = sales.example.com, eng.example.com
                             <quote>?</quote> character, similarly to how
                             search bases work.
                         </para>
+			<para>
+                            Nested group membership must be searched for using
+                            a special OID <quote>:1.2.840.113556.1.4.1941:</quote>.
+                            If you do not use this OID then nested group membership
+                            will not be resolved. See example below.
+                        </para>
                         <para>
                             The most specific match is always used. For
                             example, if the option specified filter
@@ -255,6 +261,9 @@ DOM:dom2:(memberOf=cn=admins,ou=groups,dc=dom2,dc=com)
 
 # apply filter on forest called EXAMPLE.COM only:
 FOREST:EXAMPLE.COM:(memberOf=cn=admins,ou=groups,dc=example,dc=com)
+
+# apply filter for a member of a nested group in dom1:
+DOM:dom1:(memberOf:1.2.840.113556.1.4.1941:=cn=nestedgroup,ou=groups,dc=example,dc=com)
                         </programlisting>
                         <para>
                             Default: Not set
